@@ -1,0 +1,28 @@
+========================================
+  WW1 PROJECT — QUICK REFERENCE
+========================================
+
+LOCALHOST (Dev Server)
+  URL       : http://localhost:5173/
+  Start cmd : npm run dev
+  Directory : c:\Users\pavan\ww1
+
+TECH STACK
+  Framework : React + Vite
+  Language  : JavaScript (JSX)
+  Styling   : Inline CSS + index.css (CSS variables)
+  Font      : Outfit (Google Fonts)
+  Maps      : react-simple-maps
+  Tooltips  : react-tooltip
+
+KEY FILES
+  Entry point   : src/main.jsx
+  Global styles : src/index.css
+  PreWW1 page   : src/components/PreWW1.jsx
+
+SCRIPTS (run in c:\Users\pavan\ww1)
+  npm run dev     — Start dev server (localhost:5173)
+  npm run build   — Build for production
+  npm run preview — Preview production build
+
+========================================

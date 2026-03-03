@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap');
+
+:root {
+  /* Dark Theme Palette */
+  --bg-deep: #0a0a0c;
+  --bg-panel: rgba(25, 25, 30, 0.4);
+  --bg-gradient: linear-gradient(135deg, #0a0a0c 0%, #1a1a20 100%);
+
+  /* Accents */
+  --accent-crimson: #a31621;
+  --accent-crimson-glow: rgba(163, 22, 33, 0.4);
+  --accent-white: #ffffff;
+  --accent-white-glow: rgba(255, 255, 255, 0.4);
+
+  /* Text */
+  --text-primary: #ededed;
+  --text-secondary: #a0a0a5;
+  --text-muted: #6b6b72;
+
+  /* Glassmorphism */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-backdrop: blur(12px);
+
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: var(--text-primary);
+  background-color: var(--bg-deep);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.site-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/ww1_background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(4px) brightness(0.35);
+  z-index: -2;
+  pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: var(--accent-gold);
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Utility Classes */
+.glass-panel {
+  background: var(--bg-panel);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  border-radius: 16px;
+}
+
+.text-crimson {
+  color: var(--accent-crimson);
+}
+
+.text-white {
+  color: var(--accent-white);
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 20px var(--accent-white-glow);
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+/* =========================================
+   Custom Map Colors (Pre-WW1 Context)
+========================================= */
+.map-region {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.map-region:hover {
+  filter: brightness(1.2);
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+.bg-imperial {
+  background-color: #E6192B;
+}
+
+.bg-ruled {
+  background-color: #389BCA;
+}
+
+.bg-nationalism {
+  background-color: #004D25;
+}
+
+.bg-neutral {
+  background-color: #E2E8F0;
+}
