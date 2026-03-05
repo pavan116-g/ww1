@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
+import WarOverviewTabs from '../components/WarOverviewTabs';
 
 const Home = () => {
     const [hoveredCard, setHoveredCard] = useState(null);
@@ -94,6 +95,9 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* War Overview Tabs */}
+                <WarOverviewTabs />
 
                 {/* Timeline */}
                 <div style={{ marginTop: '2.5rem', marginBottom: '3.5rem' }}>
