@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -16,100 +16,10 @@ const centralPowers = [
     "Croatia", "Slovenia", "Bosnia and Herz.", "Turkey", "Bulgaria",
 ];
 
-const battleMapData = {
-    // Western Front
-    // 50 = Stalemate. < 50 = Allied Push. > 50 = Central Push.
-    "Battle of the Frontiers": { allies: ["France", "United Kingdom", "Belgium"], central: ["Germany"], momentum: 85 },
-    "Battle of the Marne": { allies: ["France", "United Kingdom"], central: ["Germany"], momentum: 35 },
-    "Race to the Sea": { allies: ["France", "United Kingdom", "Belgium"], central: ["Germany"], momentum: 50 },
-    "First Battle of Ypres": { allies: ["United Kingdom", "France", "Belgium"], central: ["Germany"], momentum: 50 },
-    "Second Battle of Ypres": { allies: ["United Kingdom", "France", "Belgium", "Canada"], central: ["Germany"], momentum: 55 },
-    "Battle of Verdun": { allies: ["France"], central: ["Germany"], momentum: 48 },
-    "Battle of the Somme": { allies: ["United Kingdom", "France"], central: ["Germany"], momentum: 45 },
-    "Battle of Arras": { allies: ["United Kingdom", "Canada"], central: ["Germany"], momentum: 40 },
-    "Third Battle of Ypres (Passchendaele)": { allies: ["United Kingdom", "Canada", "Australia", "New Zealand", "France"], central: ["Germany"], momentum: 42 },
-    "Battle of Cambrai": { allies: ["United Kingdom"], central: ["Germany"], momentum: 50 },
-    "Spring Offensive (Kaiserschlacht)": { allies: ["United Kingdom", "France", "United States of America", "Portugal"], central: ["Germany"], momentum: 75 },
-    "Hundred Days Offensive": { allies: ["United Kingdom", "France", "United States of America", "Canada", "Australia", "New Zealand", "Belgium"], central: ["Germany"], momentum: 10 },
-
-    // Eastern Front
-    "Battle of Tannenberg": { allies: ["Russia"], central: ["Germany"], momentum: 85 },
-    "Battle of Masurian Lakes I": { allies: ["Russia"], central: ["Germany"], momentum: 70 },
-    "Battle of Masurian Lakes II": { allies: ["Russia"], central: ["Germany"], momentum: 75 },
-    "Gorlice–Tarnów Offensive": { allies: ["Russia"], central: ["Germany", "Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz."], momentum: 90 },
-    "The Great Retreat": { allies: ["Russia"], central: ["Germany", "Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz."], momentum: 95 },
-    "Lake Naroch Offensive": { allies: ["Russia"], central: ["Germany"], momentum: 55 },
-    "Brusilov Offensive": { allies: ["Russia"], central: ["Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz.", "Germany"], momentum: 20 },
-    "Kerensky Offensive": { allies: ["Russia"], central: ["Germany", "Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz."], momentum: 80 },
-    "Treaty of Brest-Litovsk": { allies: ["Russia"], central: ["Germany", "Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz.", "Turkey", "Bulgaria"], momentum: 100 },
-
-    // Middle East
-    "Gallipoli Campaign": { allies: ["United Kingdom", "France", "Australia", "New Zealand"], central: ["Turkey", "Germany"], momentum: 65 }, // Ottoman defensive victory
-    "Sinai and Palestine Campaign": { allies: ["United Kingdom", "Australia", "New Zealand", "France"], central: ["Turkey", "Germany"], momentum: 20 },
-    "Mesopotamian Campaign": { allies: ["United Kingdom"], central: ["Turkey", "Germany"], momentum: 30 },
-    "Arab Revolt": { allies: ["United Kingdom"], central: ["Turkey"], momentum: 15 },
-
-    // Naval
-    "Battle of Heligoland Bight": { allies: ["United Kingdom"], central: ["Germany"], momentum: 30 },
-    "Battle of Jutland": { allies: ["United Kingdom"], central: ["Germany"], momentum: 50 },
-    "U-boat Campaign": { allies: ["United Kingdom", "United States of America", "France"], central: ["Germany"], momentum: 50 }, // Ebbed and flowed
-
-    // Italian Front
-    "Battles of the Isonzo": { allies: ["Italy"], central: ["Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz."], momentum: 55 },
-    "Battle of Caporetto": { allies: ["Italy"], central: ["Germany", "Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz."], momentum: 85 },
-    "Battle of Vittorio Veneto": { allies: ["Italy", "United Kingdom", "France", "United States of America"], central: ["Austria", "Hungary", "Czechia", "Slovakia", "Croatia", "Slovenia", "Bosnia and Herz."], momentum: 10 },
-};
 
 
 const WarOverviewTabs = () => {
     const [activePanel, setActivePanel] = useState(null);
-    const [activeFront, setActiveFront] = useState(null);
-    const [expandedBattle, setExpandedBattle] = useState(null);
-    const togglePanel = (name) => setActivePanel(p => p === name ? null : name);
-
-    const [westernBattles, setWesternBattles] = useState([]);
-    const [easternBattles, setEasternBattles] = useState([]);
-    const [middleEastBattles, setMiddleEastBattles] = useState([]);
-    const [navalBattles, setNavalBattles] = useState([]);
-    const [italianBattles, setItalianBattles] = useState([]);
-
-    useEffect(() => {
-        async function fetchBattles() {
-            const { data, error } = await supabase.from('battles').select('*');
-            if (error) {
-                console.error("Error fetching battles:", error);
-            } else if (data) {
-                // Sort by date/name or whatever preferred order, currently assuming natural order
-                setWesternBattles(data.filter(b => b.front === 'western'));
-                setEasternBattles(data.filter(b => b.front === 'eastern'));
-                setMiddleEastBattles(data.filter(b => b.front === 'middle-east'));
-                setNavalBattles(data.filter(b => b.front === 'naval'));
-                setItalianBattles(data.filter(b => b.front === 'italian'));
-            }
-        }
-        fetchBattles();
-    }, []);
-
-    const isWest = activeFront === 'west';
-    const isEast = activeFront === 'east';
-    const isMidEast = activeFront === 'middle-east';
-    const isNaval = activeFront === 'naval';
-    const isItalian = activeFront === 'italian';
-
-    const battles = isWest ? westernBattles :
-        isEast ? easternBattles :
-            isMidEast ? middleEastBattles :
-                isNaval ? navalBattles :
-                    isItalian ? italianBattles : [];
-
-    let accent = "#6ea8d8";
-    let topBorder = "#3a6090";
-    if (isEast) { accent = "#E6192B"; topBorder = "#9b1a1a"; }
-    else if (isMidEast) { accent = "#c9a84c"; topBorder = "#8a7131"; }
-    else if (isNaval) { accent = "#4c9bc9"; topBorder = "#2a5f7e"; }
-    else if (isItalian) { accent = "#3d8c46"; topBorder = "#205426"; }
-
-    const borderColor = `${accent}4d`; // 30% opacity of accent
 
     return (
         <div>
