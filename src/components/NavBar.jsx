@@ -39,6 +39,7 @@ const NavBar = () => {
                 <NavLink to="/" end style={linkStyle}>🏠 Overview</NavLink>
                 <NavLink to="/battles" style={linkStyle}>⚔️ Battles</NavLink>
                 <NavLink to="/people" style={linkStyle}>👑 People & Tech</NavLink>
+                <NavLink to="/legacy" style={linkStyle}>🎬 Legacy</NavLink>
             </div>
         </nav>
     );

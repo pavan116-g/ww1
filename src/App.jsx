@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Battles from './pages/Battles';
 import People from './pages/People';
+import Legacy from './pages/Legacy';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/battles" element={<Battles />} />
             <Route path="/people" element={<People />} />
+            <Route path="/legacy" element={<Legacy />} />
           </Routes>
         </main>
         <div className="app-container">
